@@ -63,6 +63,7 @@ public class NewMemoFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_new, container, false);
 
         sectionTextView = rootView.findViewById(R.id.subject_title);
+        //메모 수정 누르면 section 가져와서 spinner setting 해야 함
 
         Spinner spinner = rootView.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
@@ -98,6 +99,8 @@ public class NewMemoFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "nMode "+mMode);
+                Log.d(TAG, "AppConstants.MODE_INSERT "+mMode);
                 if(mMode == AppConstants.MODE_INSERT) {
                     saveMemo();
                 } else if(mMode == AppConstants.MODE_MODIFY) {
@@ -148,6 +151,7 @@ public class NewMemoFragment extends Fragment {
         AppConstants.println("applyItem called.");
 
         if (item != null) {
+            mMode = AppConstants.MODE_MODIFY;
 
             setSectionTextView(item.getMEMO_SUBJECT());
             setDateString(item.getCREATE_DATE());

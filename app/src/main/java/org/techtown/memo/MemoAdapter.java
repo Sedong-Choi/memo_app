@@ -25,7 +25,7 @@ implements  OnMemoItemClickListener{
         //memo_item.xml을 입력하기 위해
         View itemView = inflater.inflate(R.layout.memo_item,viewGroup,false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView,this);
     }
 
     @Override
@@ -46,14 +46,13 @@ implements  OnMemoItemClickListener{
         this.items= items;
     }
 
-    public Memo getItem(int position){
-        return items.get(position);
-    }
+    public Memo getItem(int position){ return items.get(position); }
 
-    public void setItem(int position,Memo item){
-        items.set(position,item);
-    }
 
+
+    public void setOnItemClickListener(OnMemoItemClickListener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public void onItemClick(ViewHolder viewholder, View view, int position) {
@@ -62,11 +61,11 @@ implements  OnMemoItemClickListener{
         }
     }
 
-    public void setOnItemClickListener(OnMemoItemClickListener listener) {
-        this.listener = listener;
+    public void setItem(int position,Memo item){
+        items.set(position,item);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView memo_date;
         TextView memo_subject;
         TextView memo_contents;
@@ -74,16 +73,26 @@ implements  OnMemoItemClickListener{
         ImageView memo_palette;
         ImageView memo_delete;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView,final OnMemoItemClickListener listener) {
             super(itemView);
             memo_date = itemView.findViewById(R.id.memo_date);
             memo_subject = itemView.findViewById(R.id.memo_subject);
-            memo_contents =itemView.findViewById(R.id.memo_contents);
+            memo_contents = itemView.findViewById(R.id.memo_contents);
             memo_palette = itemView.findViewById(R.id.memo_palette);//클릭시 컬러 픽커 나타나고 컬러 선택시 저장하는 메서드만들어야함
-            memo_favorite =itemView.findViewById(R.id.memo_favorite);//데이터 베이스에 memo_favorite 변경 메서드
+            memo_favorite = itemView.findViewById(R.id.memo_favorite);//데이터 베이스에 memo_favorite 변경 메서드
             memo_delete = itemView.findViewById(R.id.memo_delete);//삭제 메서드
-        }
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if (listener != null) {
+                        listener.onItemClick(ViewHolder.this, view, position);
+                    }
+                }
+            });
+        }
         public void setItem(Memo item){
             memo_date.setText(item.getCREATE_DATE());
             memo_subject.setText(item.getMEMO_SUBJECT());
@@ -95,9 +104,6 @@ implements  OnMemoItemClickListener{
             }
 
         }
-
-
-
     }
 
 
@@ -105,3 +111,8 @@ implements  OnMemoItemClickListener{
 
 
 }
+
+
+
+
+

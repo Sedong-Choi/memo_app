@@ -77,6 +77,16 @@ public class FavoriteFragment extends Fragment {
         adapter.addItem(new Memo(1,"좋아요","100억모으기 좋아라","#FF00FF00","N","2020-07-25",""));
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new OnMemoItemClickListener() {
+            @Override
+            public void onItemClick(MemoAdapter.ViewHolder ViewHolder, View view, int position) {
+                Memo item = adapter.getItem(position);
+                if(listener != null){
+                    listener.showNewMemo(item);
+                }
+            }
+        });
+
 
     }
 

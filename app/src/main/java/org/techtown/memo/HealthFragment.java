@@ -94,6 +94,15 @@ public class HealthFragment extends Fragment {
         adapter.addItem(new Memo(1,"운동","안녕하세요","#FF00FF00","N","2020-07-25",""));
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new OnMemoItemClickListener() {
+            @Override
+            public void onItemClick(MemoAdapter.ViewHolder ViewHolder, View view, int position) {
+                Memo item = adapter.getItem(position);
+                if(listener != null){
+                    listener.showNewMemo(item);
+                }
+            }
+        });
 
     }
     public int loadMemoListData() {

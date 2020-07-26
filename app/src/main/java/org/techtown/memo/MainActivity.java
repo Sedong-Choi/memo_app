@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
         }
     }
     @Override
-            public void showNewMemo(Memo item) {
+    public void showNewMemo(Memo item) {
 
         NewMemoFragment newMemoFragment= new NewMemoFragment();
         newMemoFragment.setItem(item);

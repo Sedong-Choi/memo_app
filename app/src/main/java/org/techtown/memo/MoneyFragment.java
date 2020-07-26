@@ -94,6 +94,16 @@ public class MoneyFragment extends Fragment {
         adapter.addItem(new Memo(1,"가계부","100억 모으기","#FF00FF00","N","2020-07-25",""));
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new OnMemoItemClickListener() {
+            @Override
+            public void onItemClick(MemoAdapter.ViewHolder ViewHolder, View view, int position) {
+                Memo item = adapter.getItem(position);
+                if(listener != null){
+                    listener.showNewMemo(item);
+                }
+            }
+        });
+
 
     }
 

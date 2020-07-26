@@ -3,6 +3,7 @@ package org.techtown.memo;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class StudyFragment extends Fragment {
         Button todayWriteButton = rootView.findViewById(R.id.add_button);
         todayWriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//메모 추가 버튼 작성시
                 Bundle bundle = new Bundle();
                 bundle.putString("MEMO_SUBJECT","STUDY");
                 newMemoFragment = new NewMemoFragment();
@@ -94,12 +95,9 @@ public class StudyFragment extends Fragment {
 
         adapter.setOnItemClickListener(new OnMemoItemClickListener() {
             @Override
-            public void onItemClick(MemoAdapter.ViewHolder holder, View view, int position) {
+            public void onItemClick(MemoAdapter.ViewHolder ViewHolder, View view, int position) {
                 Memo item = adapter.getItem(position);
-                setItem(item);//클릭한 recyclerView 저장
-                Log.d(TAG, "아이템 선택됨 : " + item.get_id());
-
-                if (listener != null) {
+                if(listener != null){
                     listener.showNewMemo(item);
                 }
             }
