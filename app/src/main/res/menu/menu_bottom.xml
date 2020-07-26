@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/tab_study"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/list_48"
+        android:title="공부"/>
+    <item
+        android:id="@+id/tab_health"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/list_48"
+        android:title="운동"/>
+    <item
+        android:id="@+id/tab_money"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/list_48"
+        android:title="가계부"/>
+    <item
+        android:id="@+id/tab_favorite"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:icon="@drawable/list_48"
+        android:title="좋아요"/>
+<!--    <item-->
+<!--        android:id="@+id/tab_analysis"-->
+<!--        app:showAsAction="ifRoom"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/graph_48"-->
+<!--        android:title="통계"/>-->
+    <item
+        android:id="@+id/tab_newmemo"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/graph_48"
+        android:title="새메모"/>
+
+</menu>
