@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
     Bundle bundle = new Bundle();
 
     public static MemoDatabase mDatabase = null;
+    //하이
 
 
     @Override
