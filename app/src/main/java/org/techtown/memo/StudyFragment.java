@@ -98,6 +98,7 @@ public class StudyFragment extends Fragment {
             public void onItemClick(MemoAdapter.ViewHolder ViewHolder, View view, int position) {
                 Memo item = adapter.getItem(position);
                 if(listener != null){
+
                     listener.showNewMemo(item);
                 }
             }

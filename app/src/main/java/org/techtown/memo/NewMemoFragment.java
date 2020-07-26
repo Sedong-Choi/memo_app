@@ -70,6 +70,8 @@ public class NewMemoFragment extends Fragment {
                rootView.getContext(), android.R.layout.simple_spinner_item ,items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+//    AppConstants.println(getArguments().getString("MEMO_SUBJECT").toString());
+//        spinner.setSelection(1);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public  void onItemSelected(AdapterView<?> adapterView,View view,int position, long id){
