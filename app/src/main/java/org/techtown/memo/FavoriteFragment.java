@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -74,7 +72,7 @@ public class FavoriteFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MemoAdapter();
-        adapter.addItem(new Memo(1,"좋아요","100억모으기 좋아라","#FF00FF00","N","2020-07-25",""));
+        adapter.addItem(new Memo(1,"좋아요","100억모으기 좋아라",1231321,"N","2020-07-25",""));
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnMemoItemClickListener() {
@@ -85,6 +83,25 @@ public class FavoriteFragment extends Fragment {
                     listener.showNewMemo(item);
                 }
             }
+
+            @Override
+            public void favoriteClick(Memo item, View view, int position) {
+
+            }
+
+            @Override
+            public void paletteClick(Memo item, View view, int position) {
+
+            }
+
+            @Override
+            public void deleteClick(Memo item, View view, int position) {
+
+            }
+
+
+
+
         });
 
 
@@ -112,7 +129,7 @@ public class FavoriteFragment extends Fragment {
                 int _id = outCursor.getInt(0);
                 String subject = outCursor.getString(1);
                 String contents = outCursor.getString(2);
-                String color = outCursor.getString(3);
+                int color = outCursor.getInt(3);
                 String favorite = outCursor.getString(4);
                 String dateStr = outCursor.getString(5);
                 String createDateStr = null;

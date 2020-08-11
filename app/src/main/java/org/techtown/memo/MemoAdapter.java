@@ -4,7 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,28 +18,32 @@ import java.util.ArrayList;
 public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder>
 implements  OnMemoItemClickListener{
     //MemoItemClickListener >>  메모클릭했을대 수정하는 곳으로 이동하는 listener
-    ArrayList<Memo> items = new ArrayList<Memo>();
-    OnMemoItemClickListener listener;
+    private ArrayList<Memo> items = new ArrayList<>();
+    private OnMemoItemClickListener listener;
+    private MainActivity mainActivity;
+    LinearLayout linearLayout;
+    Memo memo;
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         //memo_item.xml을 입력하기 위해
         View itemView = inflater.inflate(R.layout.memo_item,viewGroup,false);
-
+        mainActivity = (MainActivity) viewGroup.getContext();
         return new ViewHolder(itemView,this);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewholder, int position) {
         Memo item = items.get(position); // ArrayList<Memo> 에서 순서 별로 삽입하기위해
         viewholder.setItem(item);
     }
-
     @Override
     public int getItemCount() {
         return items.size();
     }
+
+
     public void addItem(Memo item){
         items.add(item);
     }
@@ -47,7 +53,9 @@ implements  OnMemoItemClickListener{
     }
 
     public Memo getItem(int position){ return items.get(position); }
-
+    public void setItem(int position,Memo item){
+        items.set(position,item);
+    }
 
 
     public void setOnItemClickListener(OnMemoItemClickListener listener) {
@@ -55,32 +63,58 @@ implements  OnMemoItemClickListener{
     }
 
     @Override
-    public void onItemClick(ViewHolder viewholder, View view, int position) {
+    public void onItemClick(ViewHolder ViewHolder, View view, int position) {
      if (listener != null) {
-            listener.onItemClick(viewholder, view, position);
+            listener.onItemClick(ViewHolder, view, position);
         }
     }
 
-    public void setItem(int position,Memo item){
-        items.set(position,item);
+    @Override
+    public void favoriteClick(Memo item, View view, int position) {
+        if (listener != null) {
+            listener.favoriteClick(item, view,position);
+        }
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void paletteClick(Memo item, View view, int position) {
+        if (listener != null) {
+            listener.paletteClick(item, view,position);
+        }
+    }
+
+    @Override
+    public void deleteClick(Memo item, View view, int position) {
+        if (listener != null) {
+            listener.deleteClick(item, view,position);
+        }
+    }
+
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView memo_date;
         TextView memo_subject;
         TextView memo_contents;
         ImageView memo_favorite;
         ImageView memo_palette;
         ImageView memo_delete;
+        LinearLayout linearLayout;
 
-        public ViewHolder(View itemView,final OnMemoItemClickListener listener) {
+
+        public ViewHolder(final View itemView, final OnMemoItemClickListener listener) {
+
+
             super(itemView);
+
             memo_date = itemView.findViewById(R.id.memo_date);
             memo_subject = itemView.findViewById(R.id.memo_subject);
             memo_contents = itemView.findViewById(R.id.memo_contents);
             memo_palette = itemView.findViewById(R.id.memo_palette);//클릭시 컬러 픽커 나타나고 컬러 선택시 저장하는 메서드만들어야함
             memo_favorite = itemView.findViewById(R.id.memo_favorite);//데이터 베이스에 memo_favorite 변경 메서드
             memo_delete = itemView.findViewById(R.id.memo_delete);//삭제 메서드
+            linearLayout = itemView.findViewById(R.id.linearLayout);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,11 +126,69 @@ implements  OnMemoItemClickListener{
                     }
                 }
             });
+            memo_favorite.setOnClickListener(new View.OnClickListener(){
+
+
+
+                @Override
+                public  void onClick(View view){
+                    //cardView 에 할당된 번호 가져오기
+                    int position = getAdapterPosition();
+                    Toast.makeText(view.getContext(),
+                            position+"번째 좋아요 클릭됨",
+                            Toast.LENGTH_SHORT).show();
+                    if(position != RecyclerView.NO_POSITION){
+                             Memo item =    items.get(position);
+
+                        if (listener != null) {
+                            listener.favoriteClick(item, view, position);
+                        }
+                    }
+
+                }
+            });
+
+            memo_palette.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public  void onClick(View view){
+                    //cardView 에 할당된 번호 가져오기
+                    int position = getAdapterPosition();
+                    Toast.makeText(view.getContext(),
+                            position + "번째 팔레트 클릭됨",
+                            Toast.LENGTH_SHORT).show();
+                    if(position != RecyclerView.NO_POSITION) {
+                        Memo item = items.get(position);
+                        if (listener != null) {
+                            listener.paletteClick(item, view, position);
+                        }
+                    }
+                }
+            });
+
+            memo_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //cardView 에 할당된 번호 가져오기
+                    int position = getAdapterPosition();
+                    Toast.makeText(view.getContext(),
+                            position + "번째 삭제 클릭됨",
+                            Toast.LENGTH_SHORT).show();
+                    if(position != RecyclerView.NO_POSITION) {
+                        Memo item = items.get(position);
+                        if (listener != null) {
+                            listener.deleteClick(item, view, position);
+                        }
+
+                    }
+                }
+            });
         }
         public void setItem(Memo item){
             memo_date.setText(item.getCREATE_DATE());
             memo_subject.setText(item.getMEMO_SUBJECT());
             memo_contents.setText(item.getMEMO_CONTENTS());
+            memo_palette.setBackgroundColor(item.getMEMO_COLOR());
+            linearLayout.setBackgroundColor(item.getMEMO_COLOR());
             if( item.getMEMO_FAVORITE().equals("Y")){
                 memo_favorite.setImageResource(R.drawable.baseline_star_black_18dp);
             }else{
@@ -104,11 +196,16 @@ implements  OnMemoItemClickListener{
             }
 
         }
-    }
 
 
 
 
+
+
+
+
+
+}
 
 }
 

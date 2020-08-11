@@ -1,7 +1,6 @@
 package org.techtown.memo;
 
 import android.content.Context;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,13 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-
 
 import java.util.Date;
 
@@ -45,6 +41,8 @@ public class NewMemoFragment extends Fragment {
         }
 
 
+
+
     }
 
     @Override
@@ -57,25 +55,54 @@ public class NewMemoFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        super.onCreateView(inflater,container,savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_new, container, false);
 
         sectionTextView = rootView.findViewById(R.id.subject_title);
-        //메모 수정 누르면 section 가져와서 spinner setting 해야 함
+
+        String section = "";
+        if(item != null){
+
+            //메모 클릭시 subject 받아와서 spinner 위치 정해줌
+            section  =  item.getMEMO_SUBJECT();
+        }else if(getArguments() !=null){
+            //새 메모 클릭시 subject 받아와 설정하는 곳
+            section = this.getArguments().getString("MEMO_SUBJECT");
+        }else{
+            section = "공부";
+        }
+
+
+
+
 
         Spinner spinner = rootView.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                rootView.getContext(), android.R.layout.simple_spinner_item ,items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-//    AppConstants.println(getArguments().getString("MEMO_SUBJECT").toString());
-//        spinner.setSelection(1);
+        switch(section){
+            case "공부":
+                spinner.setSelection(0);
+                break;
+            case "운동":
+                spinner.setSelection(1);
+                break;
+            case "가계부":
+                spinner.setSelection(2);
+                break;
+            default:
+                spinner.setSelection(0);
+                break;
+        }
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public  void onItemSelected(AdapterView<?> adapterView,View view,int position, long id){
-                Toast.makeText(context,"선택했엉",Toast.LENGTH_SHORT).show();
+
                 sectionTextView.setText(items[position]);
             }
 
@@ -175,12 +202,12 @@ public class NewMemoFragment extends Fragment {
     private void saveMemo() {
         String memo_subject = sectionTextView.getText().toString();
         String contents = contentsInput.getText().toString();
-
+        int color = 0;
         String sql = "insert into " + MemoDatabase.TABLE_MEMO +
                 "(MEMO_SUBJECT, MEMO_CONTENTS,MEMO_COLOR,MEMO_FAVORITE) values(" +
                 "'"+ memo_subject + "', " +
                 "'"+ contents + "', " +
-                "'"+ "" + "', " +
+                ""+color + ", " +
                 "'"+ "" + "' " + ")";
 
         Log.d(TAG, "sql : " + sql);
@@ -195,14 +222,14 @@ public class NewMemoFragment extends Fragment {
         if (item != null) {
             String memo_subject = sectionTextView.getText().toString();
             String contents = contentsInput.getText().toString();
-
+            int color = item.getMEMO_COLOR();
 
             // update note
             String sql = "update " + MemoDatabase.TABLE_MEMO +
                     " set " +
                     "   MEMO_SUBJECT = '" + memo_subject + "'" +
                     "   ,MEMO_CONTENTS = '" + contents + "'" +
-                    "   ,MEMO_COLOR = '" + "" + "'" +
+                    "   ,MEMO_COLOR = " + color + "" +
                     "   ,MEMO_FAVORITE = '" + "" + "'" +
                     " where " +
                     "   _id = " + item._id;

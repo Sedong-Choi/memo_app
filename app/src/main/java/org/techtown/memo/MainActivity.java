@@ -1,14 +1,12 @@
 package org.techtown.memo;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,9 +19,12 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
     FavoriteFragment favoriteFragment;
     NewMemoFragment newMemoFragment;
     BottomNavigationView bottomNavigation;
-    Bundle bundle = new Bundle();
+    String subject;
+    MemoAdapter adapter;
+    Memo item;
 
-    public static MemoDatabase mDatabase = null;
+
+    public MemoDatabase mDatabase = null;
 
 
 
@@ -33,34 +34,39 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
         setContentView(R.layout.activity_main);
 
 
+
+        //fragment 생성됐지만 아직 작동하지 않는다
         studyFragment= new StudyFragment();
         healthFragment = new HealthFragment();
         moneyFragment = new MoneyFragment();
         favoriteFragment = new FavoriteFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, studyFragment).commit();
+
+        //기본 fragment 설정을 위해 replace and commit 을해서 작동
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, studyFragment).commit();//
 
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                //아래 네비게이션 클릭시 fragment 변경
 
                 switch (item.getItemId()) {
                     case R.id.tab_study:
-
+                        subject = "공부";
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, studyFragment).commit();
                         return true;
 
                     case R.id.tab_health:
-
+                        subject = "운동";
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, healthFragment).commit();
                         return true;
 
                     case R.id.tab_money:
-
+                        subject = "가계부";
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, moneyFragment).commit();
                         return true;
@@ -72,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
                         return true;
                     case R.id.tab_newmemo:
                         newMemoFragment = new NewMemoFragment();
+                        Bundle result = new Bundle();
+                            if(subject !=null) {
+                                Toast.makeText(getApplicationContext(),subject+" 왔다!!",Toast.LENGTH_SHORT).show();
+                                result.putString("MEMO_SUBJECT", subject);
+                                newMemoFragment.setArguments(result);
+                            }
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, newMemoFragment).commit();
 
@@ -118,19 +130,35 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
     }
     @Override
     public void onTabSelected(int position) {
+
         if (position == 0) {
+            subject = "공부";
             bottomNavigation.setSelectedItemId(R.id.tab_study);
+
         } else if (position == 1) {
+            subject = "운동";
             bottomNavigation.setSelectedItemId(R.id.tab_health);
+
         } else if (position == 2) {
+            subject = "가계부";
             bottomNavigation.setSelectedItemId(R.id.tab_money);
-        }   else if (position == 3) {
+
+        }  else if (position == 3) {
             bottomNavigation.setSelectedItemId(R.id.tab_favorite);
+
         }else if (position == 4) {
             newMemoFragment = new NewMemoFragment();
+            Bundle result = new Bundle();
+            if(subject !=null) {
+                Toast.makeText(getApplicationContext(),subject+" 왔다!!22",Toast.LENGTH_SHORT).show();
+                result.putString("MEMO_SUBJECT", subject);
+                newMemoFragment.setArguments(result);
+            }
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, newMemoFragment).commit();
+            bottomNavigation.setSelectedItemId(R.id.tab_newmemo);
         }
+
     }
     @Override
     public void showNewMemo(Memo item) {
@@ -142,4 +170,25 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
                 .replace(R.id.container, newMemoFragment).commit();
 
     }
+    public void changeFavorite(Memo memo){
+        //데이터 베이스 변경도 들어가야 함
+
+        if(memo.getMEMO_FAVORITE().equals("Y")){
+            memo.setMEMO_FAVORITE("N");
+
+        }else{
+            memo.setMEMO_FAVORITE("Y");
+        }
+    }
+
+
+
+
 }
+
+
+
+
+
+
+

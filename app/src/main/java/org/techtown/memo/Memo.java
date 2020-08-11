@@ -4,12 +4,12 @@ public class Memo {
     int _id;
     String MEMO_SUBJECT;
     String MEMO_CONTENTS;
-    String MEMO_COLOR;
+    int MEMO_COLOR;
     String MEMO_FAVORITE;
     String CREATE_DATE;
     String MODIFY_DATE;
 
-    public Memo(int _id, String MEMO_SUBJECT, String MEMO_CONTENTS,String MEMO_COLOR, String MEMO_FAVORITE, String CREATE_DATE,String MODIFY_DATE) {
+    public Memo(int _id, String MEMO_SUBJECT, String MEMO_CONTENTS,int MEMO_COLOR, String MEMO_FAVORITE, String CREATE_DATE,String MODIFY_DATE) {
         this._id = _id;
         this.MEMO_SUBJECT =  MEMO_SUBJECT;
         this.MEMO_CONTENTS = MEMO_CONTENTS;
@@ -19,7 +19,7 @@ public class Memo {
         this.MODIFY_DATE = MODIFY_DATE;
     }
 
-    public Memo(int _id, String MEMO_SUBJECT, String MEMO_CONTENTS,String MEMO_COLOR, String MEMO_FAVORITE, String CREATE_DATE) {
+    public Memo(int _id, String MEMO_SUBJECT, String MEMO_CONTENTS,int MEMO_COLOR, String MEMO_FAVORITE, String CREATE_DATE) {
         this._id = _id;
         this.MEMO_SUBJECT =  MEMO_SUBJECT;
         this.MEMO_CONTENTS = MEMO_CONTENTS;
@@ -53,11 +53,11 @@ public class Memo {
         this.MEMO_CONTENTS = MEMO_CONTENTS;
     }
 
-    public String getMEMO_COLOR() {
+    public int getMEMO_COLOR() {
         return MEMO_COLOR;
     }
 
-    public void setMEMO_COLOR(String MEMO_COLOR) {
+    public void setMEMO_COLOR(int MEMO_COLOR) {
         this.MEMO_COLOR = MEMO_COLOR;
     }
 

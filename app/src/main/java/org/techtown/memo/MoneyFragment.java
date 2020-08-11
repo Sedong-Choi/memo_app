@@ -20,13 +20,13 @@ import java.util.Date;
 public class MoneyFragment extends Fragment {
     private static final String TAG = "MemoFragment";
 
-    TextView textView;//메모_'공부 || 운동 || 가계부 || 좋아요 || 통계' 입력하기 위해 객체 가져온다.
+    TextView sectionTextView;//메모_'공부 || 운동 || 가계부 || 좋아요 || 통계' 입력하기 위해 객체 가져온다.
     RecyclerView recyclerView;
     MemoAdapter adapter;
 
     Context context;
     OnTabItemSelectedListener listener;
-    NewMemoFragment newMemoFragment;
+
 
     @Override
     public void onAttach(Context context) {
@@ -53,8 +53,8 @@ public class MoneyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_memo, container, false);
-        textView = rootView.findViewById(R.id.section_title);
-        textView.setText("가계부");
+        sectionTextView = rootView.findViewById(R.id.section_title);
+        sectionTextView.setText("가계부");
 
 
 
@@ -74,11 +74,9 @@ public class MoneyFragment extends Fragment {
         todayWriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String section  = (String) sectionTextView.getText();
                 Bundle bundle = new Bundle();
-                bundle.putString("MEMO_SUBJECT","MONEY");
-                newMemoFragment = new NewMemoFragment();
-                newMemoFragment.setArguments(bundle);
-                Toast.makeText(getContext(),"add_button clicked",Toast.LENGTH_SHORT).show();
+                bundle.putString("MEMO_SUBJECT",section);
                 if (listener != null) {
                     listener.onTabSelected(4);
                 }
@@ -91,17 +89,37 @@ public class MoneyFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MemoAdapter();
-        adapter.addItem(new Memo(1,"가계부","100억 모으기","#FF00FF00","N","2020-07-25",""));
+        adapter.addItem(new Memo(1,"가계부","100억 모으기",321321,"N","2020-07-25",""));
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnMemoItemClickListener() {
             @Override
             public void onItemClick(MemoAdapter.ViewHolder ViewHolder, View view, int position) {
-                Memo item = adapter.getItem(position);
+                Memo item = adapter.getItem(position);// position ==> cardView 의 위치
+                Toast.makeText(getContext(),""+position,Toast.LENGTH_SHORT).show();
                 if(listener != null){
                     listener.showNewMemo(item);
                 }
             }
+
+            @Override
+            public void favoriteClick(Memo item, View view, int position) {
+
+            }
+
+            @Override
+            public void paletteClick(Memo item, View view, int position) {
+
+            }
+
+            @Override
+            public void deleteClick(Memo item, View view, int position) {
+
+            }
+
+
+
+
         });
 
 
@@ -129,7 +147,7 @@ public class MoneyFragment extends Fragment {
                 int _id = outCursor.getInt(0);
                 String subject = outCursor.getString(1);
                 String contents = outCursor.getString(2);
-                String color = outCursor.getString(3);
+                int color = outCursor.getInt(3);
                 String favorite = outCursor.getString(4);
                 String dateStr = outCursor.getString(5);
                 String createDateStr = null;

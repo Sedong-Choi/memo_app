@@ -4,5 +4,4 @@ public interface OnTabItemSelectedListener {
     void onTabSelected(int position);
     void showNewMemo(Memo item);
 
-
 }
