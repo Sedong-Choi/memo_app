@@ -13,3 +13,8 @@
 2. git merge
 3. git checkout
 4. git fetch
+
+
+## 브랜치 개념
+## 커밋 취소
+## 돌리기 등등...
