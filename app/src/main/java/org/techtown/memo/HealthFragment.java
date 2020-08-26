@@ -52,18 +52,18 @@ public class HealthFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_memo, container, false);
-        sectionTextView = rootView.findViewById(R.id.section_title);
-        sectionTextView.setText("운동");
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_health, container, false);
+//        sectionTextView = rootView.findViewById(R.id.section_title);
+//        sectionTextView.setText("운동");
 
 
 
-        initUI(rootView);
+        //initUI(rootView);
 
 
 
         // 데이터 로딩
-        loadMemoListData();
+        //loadMemoListData();
 
         return rootView;
     }

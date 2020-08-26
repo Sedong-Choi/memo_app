@@ -21,8 +21,8 @@ implements  OnMemoItemClickListener{
     private ArrayList<Memo> items = new ArrayList<>();
     private OnMemoItemClickListener listener;
     private MainActivity mainActivity;
-    LinearLayout linearLayout;
-    Memo memo;
+
+
 
     @NonNull
     @Override

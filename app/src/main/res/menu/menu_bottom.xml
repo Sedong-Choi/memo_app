@@ -5,36 +5,36 @@
         android:id="@+id/tab_study"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/list_48"
-        android:title="공부"/>
+        android:icon="@drawable/baseline_article_black_18dp"
+        android:title="메모"/>
     <item
         android:id="@+id/tab_health"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/list_48"
+        android:icon="@drawable/baseline_fitness_center_black_18dp"
         android:title="운동"/>
     <item
         android:id="@+id/tab_money"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/list_48"
+        android:icon="@drawable/baseline_attach_money_black_18dp"
         android:title="가계부"/>
     <item
         android:id="@+id/tab_favorite"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/list_48"
+        android:icon="@drawable/baseline_bookmark_black_18dp"
         android:title="좋아요"/>
 <!--    <item-->
 <!--        android:id="@+id/tab_analysis"-->
 <!--        app:showAsAction="ifRoom"-->
 <!--        android:enabled="true"-->
-<!--        android:icon="@drawable/graph_48"-->
+<!--        android:icon="@drawable/baseline_analytics_black_18dp"-->
 <!--        android:title="통계"/>-->
     <item
         android:id="@+id/tab_newmemo"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/graph_48"
+        android:icon="@drawable/baseline_create_black_18dp"
         android:title="새메모"/>
 
 </menu>

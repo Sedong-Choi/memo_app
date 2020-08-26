@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
     NewMemoFragment newMemoFragment;
     BottomNavigationView bottomNavigation;
     String subject;
-    MemoAdapter adapter;
-    Memo item;
 
 
     public MemoDatabase mDatabase = null;
@@ -132,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
     public void onTabSelected(int position) {
 
         if (position == 0) {
-            subject = "공부";
+            subject = "메모";
             bottomNavigation.setSelectedItemId(R.id.tab_study);
 
         } else if (position == 1) {
@@ -170,16 +168,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
                 .replace(R.id.container, newMemoFragment).commit();
 
     }
-    public void changeFavorite(Memo memo){
-        //데이터 베이스 변경도 들어가야 함
 
-        if(memo.getMEMO_FAVORITE().equals("Y")){
-            memo.setMEMO_FAVORITE("N");
-
-        }else{
-            memo.setMEMO_FAVORITE("Y");
-        }
-    }
 
 
 

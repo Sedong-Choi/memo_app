@@ -25,7 +25,7 @@ public class NewMemoFragment extends Fragment {
     TextView sectionTextView;
     EditText contentsInput;
     Memo item;
-    String[] items={"공부","운동","가계부"};
+    String[] items={"메모","운동","가계부"};
     int mMode = AppConstants.MODE_INSERT;
 
 
@@ -72,7 +72,7 @@ public class NewMemoFragment extends Fragment {
             //새 메모 클릭시 subject 받아와 설정하는 곳
             section = this.getArguments().getString("MEMO_SUBJECT");
         }else{
-            section = "공부";
+            section = "메모";
         }
 
 
@@ -85,7 +85,7 @@ public class NewMemoFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         switch(section){
-            case "공부":
+            case "메모":
                 spinner.setSelection(0);
                 break;
             case "운동":

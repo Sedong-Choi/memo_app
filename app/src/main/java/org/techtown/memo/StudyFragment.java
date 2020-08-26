@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +29,7 @@ public class StudyFragment extends Fragment {
     Memo item;
     Context context;
     OnTabItemSelectedListener listener;
-    LinearLayout linearLayout;
+
 
 
 
@@ -60,9 +59,11 @@ public class StudyFragment extends Fragment {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_memo, container, false);
         sectionTextView = rootView.findViewById(R.id.section_title);
-        sectionTextView.setText("공부");
+        sectionTextView.setText("메모");
 
+        //리사이클러뷰 세팅
         initUI(rootView);
+
         // 데이터 로딩
         loadMemoListData();
 
@@ -79,7 +80,7 @@ public class StudyFragment extends Fragment {
                 //newMemo 생성 및 이동
                 if (listener != null) {
                     Bundle result = new Bundle();
-                    result.putString("MEMO_SUBJECT","공부");
+                    result.putString("MEMO_SUBJECT","메모");
 
                     listener.onTabSelected(4);
                 }
@@ -140,17 +141,17 @@ public class StudyFragment extends Fragment {
 
     }
 
-
-
     public int loadMemoListData() {
         AppConstants.println("loadSTUDYListData called.");
 
         String sql = "select _id,MEMO_SUBJECT, MEMO_CONTENTS, MEMO_COLOR, MEMO_FAVORITE, CREATE_DATE, MODIFY_DATE from " + MemoDatabase.TABLE_MEMO
-                + " where  MEMO_SUBJECT = '공부' order by CREATE_DATE desc";
+                + " where  MEMO_SUBJECT = '메모' order by CREATE_DATE desc";
 
         int recordCount = -1;
         MemoDatabase database = MemoDatabase.getInstance(context);
         if (database != null) {
+
+
             Cursor outCursor = database.rawQuery(sql);
 
             recordCount = outCursor.getCount();
@@ -189,6 +190,8 @@ public class StudyFragment extends Fragment {
 
             adapter.setItems(items);
             adapter.notifyDataSetChanged();
+
+
 
         }
 
@@ -297,13 +300,14 @@ public class StudyFragment extends Fragment {
             String contents = item.getMEMO_CONTENTS();
             int color = item.getMEMO_COLOR();
 
+
+
             // update note
             String sql = "update " + MemoDatabase.TABLE_MEMO +
                     " set " +
                     "   MEMO_SUBJECT = '" + memo_subject + "'" +
                     "   ,MEMO_CONTENTS = '" + contents + "'" +
                     "   ,MEMO_COLOR =  "+ color  +
-                    "   ,MEMO_FAVORITE = '" + "" + "'" +
                     " where " +
                     "   _id = " + item._id;
 
