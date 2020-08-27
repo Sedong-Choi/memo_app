@@ -5,7 +5,12 @@
 /../../../../../../:\Users\bulss\AndroidStudioProjects\Memo\.idea/dataSources/
 /dataSources.local.xml
 # Editor-based HTTP Client requests
-/httpRequests/
+/httpRequests/'
+
+/local.properties
+
+/.gradle/
+
 
 
 
