@@ -6,43 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".StudyFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
-        android:padding="4dp">
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"/>
-        <TextView
+        android:padding="4dp"
+        android:orientation="horizontal">
+
+
+        <EditText
             android:id="@+id/subject_title"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:textSize="26sp"
-            android:text="선택 : "/>
-
-
-
-
-
+            android:layout_marginLeft="20dp"
+            android:textSize="30sp"
+            android:hint="제목 입력"
+            android:layout_weight="3"
+            android:maxLines="1"
+            android:maxLength="8"
+            android:textColor="#000000"/>
         <TextView
             android:id="@+id/date_TextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:textSize="20sp"
-            android:layout_marginRight="30dp"
-            android:text="OO월 OO일"/>
+            android:layout_weight="4"
+            android:text="OO월 OO일"
+            android:textColor="#000000"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/contentsLayout"
@@ -63,62 +57,78 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp" >
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                >
 
-                <EditText
-                    android:id="@+id/contentsInput"
+                <LinearLayout
+                    android:id="@+id/memo_new_text"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="32sp"
-                    android:hint="내용 입력"
-                    />
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/bottomLayout"
+                    app:layout_constraintVertical_weight="1"
+                    >
 
-            </LinearLayout>
+                    <EditText
+                        android:id="@+id/contentsInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:hint="내용 입력"
+                        android:textColor="#000000"
+                        android:textSize="32sp" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/bottomLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:paddingTop="10dp"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="10dp"
+                   >
+
+                    <Button
+                        android:id="@+id/saveButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/select_button"
+                        android:text="저장"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/deleteButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/select_button"
+                        android:text="삭제"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/closeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/select_button"
+                        android:text="닫기"
+                        android:textColor="@android:color/white" />
+
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/bottomLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/select_button"
-            android:text="저장"
-            android:textColor="@android:color/white"/>
-
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/select_button"
-            android:text="삭제"
-            android:textColor="@android:color/white"/>
-
-        <Button
-            android:id="@+id/closeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/select_button"
-            android:text="닫기"
-            android:textColor="@android:color/white"/>
 
     </RelativeLayout>
 

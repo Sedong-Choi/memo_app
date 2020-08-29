@@ -53,8 +53,8 @@ public class MoneyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_memo, container, false);
-        sectionTextView = rootView.findViewById(R.id.section_title);
-        sectionTextView.setText("가계부");
+//        sectionTextView = rootView.findViewById(R.id.section_title);
+//        sectionTextView.setText("가계부");
 
 
 

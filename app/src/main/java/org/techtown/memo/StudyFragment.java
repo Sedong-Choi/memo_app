@@ -7,7 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,12 @@ public class StudyFragment extends Fragment {
     Memo item;
     Context context;
     OnTabItemSelectedListener listener;
+    Switch switch_button;
+
+
+    String[] items={"모든 메모","좋아요"};
+
+
 
 
 
@@ -58,8 +68,44 @@ public class StudyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_memo, container, false);
-        sectionTextView = rootView.findViewById(R.id.section_title);
-        sectionTextView.setText("메모");
+//        sectionTextView = rootView.findViewById(R.id.section_title);
+//        sectionTextView.setText("메모");
+
+
+        String section ="모든 메모";
+        Spinner spinner = rootView.findViewById(R.id.memo_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                rootView.getContext(), R.layout.spinner_custom,items);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_custom);
+        spinner.setAdapter(adapter);
+        switch(section){
+            case "모든 메모":
+                spinner.setSelection(0);
+                break;
+            case "좋아요":
+                spinner.setSelection(1);
+                break;
+            default:
+                spinner.setSelection(0);
+                break;
+        }
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public  void onItemSelected(AdapterView<?> adapterView,View view,int position, long id){
+
+
+                if(position ==0){
+                    loadMemoListData();
+                }else if(position == 1){
+                    loadFavoMemoListData();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView){
+                sectionTextView.setText("");
+            }
+        });
 
         //리사이클러뷰 세팅
         initUI(rootView);
@@ -72,6 +118,10 @@ public class StudyFragment extends Fragment {
 
     private void initUI(ViewGroup rootView) {
 
+
+
+
+
         Button todayWriteButton = rootView.findViewById(R.id.add_button);
         todayWriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +130,7 @@ public class StudyFragment extends Fragment {
                 //newMemo 생성 및 이동
                 if (listener != null) {
                     Bundle result = new Bundle();
-                    result.putString("MEMO_SUBJECT","메모");
+                    result.putString("MEMO_SUBJECT","제목 입력");
 
                     listener.onTabSelected(4);
                 }
@@ -145,7 +195,7 @@ public class StudyFragment extends Fragment {
         AppConstants.println("loadSTUDYListData called.");
 
         String sql = "select _id,MEMO_SUBJECT, MEMO_CONTENTS, MEMO_COLOR, MEMO_FAVORITE, CREATE_DATE, MODIFY_DATE from " + MemoDatabase.TABLE_MEMO
-                + " where  MEMO_SUBJECT = '메모' order by CREATE_DATE desc";
+                + " order by CREATE_DATE desc";
 
         int recordCount = -1;
         MemoDatabase database = MemoDatabase.getInstance(context);
@@ -319,5 +369,56 @@ public class StudyFragment extends Fragment {
     }
 
 
+    public int loadFavoMemoListData() {
+        AppConstants.println("loadFAVOListData called.");
 
+        String sql = "select _id,MEMO_SUBJECT, MEMO_CONTENTS, MEMO_COLOR, MEMO_FAVORITE, CREATE_DATE, MODIFY_DATE from " + MemoDatabase.TABLE_MEMO
+                + " where  MEMO_FAVORITE = 'Y' order by CREATE_DATE desc";
+
+        int recordCount = -1;
+        MemoDatabase database = MemoDatabase.getInstance(context);
+        if (database != null) {
+            Cursor outCursor = database.rawQuery(sql);
+
+            recordCount = outCursor.getCount();
+            AppConstants.println("record count : " + recordCount + "\n");
+
+            ArrayList<Memo> items = new ArrayList<Memo>();
+
+            for (int i = 0; i < recordCount; i++) {
+                outCursor.moveToNext();
+
+                int _id = outCursor.getInt(0);
+                String subject = outCursor.getString(1);
+                String contents = outCursor.getString(2);
+                int color = outCursor.getInt(3);
+                String favorite = outCursor.getString(4);
+                String dateStr = outCursor.getString(5);
+                String createDateStr = null;
+                if (dateStr != null && dateStr.length() > 10) {
+                    try {
+                        Date inDate = AppConstants.dateFormat4.parse(dateStr);
+                        createDateStr = AppConstants.dateFormat3.format(inDate);
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    createDateStr = "";
+                }
+
+                AppConstants.println("#" + i + " -> " + _id + ", " + subject + ", " +
+                        contents + ", " + color + ", " + favorite + ", " + createDateStr);
+
+                items.add(new Memo(_id, subject, contents, color, favorite, createDateStr));
+            }
+
+            outCursor.close();
+
+            adapter.setItems(items);
+            adapter.notifyDataSetChanged();
+
+        }
+
+        return recordCount;
+    }
 }

@@ -22,10 +22,9 @@ public class NewMemoFragment extends Fragment {
     Context context;
     OnTabItemSelectedListener listener;
     TextView dateTextView;
-    TextView sectionTextView;
+    EditText sectionText;
     EditText contentsInput;
     Memo item;
-    String[] items={"메모","운동","가계부"};
     int mMode = AppConstants.MODE_INSERT;
 
 
@@ -61,7 +60,9 @@ public class NewMemoFragment extends Fragment {
         super.onCreateView(inflater,container,savedInstanceState);
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_new, container, false);
 
-        sectionTextView = rootView.findViewById(R.id.subject_title);
+        sectionText = rootView.findViewById(R.id.subject_title);
+
+
 
         String section = "";
         if(item != null){
@@ -72,46 +73,9 @@ public class NewMemoFragment extends Fragment {
             //새 메모 클릭시 subject 받아와 설정하는 곳
             section = this.getArguments().getString("MEMO_SUBJECT");
         }else{
-            section = "메모";
+            section = "메모2";
         }
-
-
-
-
-
-        Spinner spinner = rootView.findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-               rootView.getContext(), android.R.layout.simple_spinner_item ,items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        switch(section){
-            case "메모":
-                spinner.setSelection(0);
-                break;
-            case "운동":
-                spinner.setSelection(1);
-                break;
-            case "가계부":
-                spinner.setSelection(2);
-                break;
-            default:
-                spinner.setSelection(0);
-                break;
-        }
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public  void onItemSelected(AdapterView<?> adapterView,View view,int position, long id){
-
-                sectionTextView.setText(items[position]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView){
-                sectionTextView.setText("");
-            }
-        });
-
+        sectionText.setText(section);
         initUI(rootView);
         applyItem();
         return rootView;
@@ -120,7 +84,7 @@ public class NewMemoFragment extends Fragment {
 
         dateTextView = rootView.findViewById(R.id.date_TextView);
         contentsInput = rootView.findViewById(R.id.contentsInput);
-        sectionTextView = rootView.findViewById(R.id.subject_title);
+        sectionText = rootView.findViewById(R.id.subject_title);
 
         
 
@@ -170,7 +134,14 @@ public class NewMemoFragment extends Fragment {
         this.item = item;
     }
     public void setDateString(String dateString) { dateTextView.setText(dateString); }
-    public void setSectionTextView(String sectionString){sectionTextView.setText(sectionString); }
+    public void setSectionTextView(String sectionString){
+        Log.d("sectionTextView","sectionString ="+  sectionString);
+        if(sectionString  == null){
+            sectionText.setText("제목 입력");
+        }else{
+            sectionText.setText(sectionString);
+        }
+    }
     public void setContents(String contentsString) {
         contentsInput.setText(contentsString);
     }
@@ -191,7 +162,6 @@ public class NewMemoFragment extends Fragment {
             Date currentDate = new Date();
             String currentDateString = AppConstants.dateFormat3.format(currentDate);
             setDateString(currentDateString);
-
             contentsInput.setText("");
         }
 
@@ -200,7 +170,7 @@ public class NewMemoFragment extends Fragment {
      * 데이터베이스 레코드 추가
      */
     private void saveMemo() {
-        String memo_subject = sectionTextView.getText().toString();
+        String memo_subject = sectionText.getText().toString();
         String contents = contentsInput.getText().toString();
         int color = 0;
         String sql = "insert into " + MemoDatabase.TABLE_MEMO +
@@ -220,7 +190,7 @@ public class NewMemoFragment extends Fragment {
      */
     private void modifyMemo() {
         if (item != null) {
-            String memo_subject = sectionTextView.getText().toString();
+            String memo_subject = sectionText.getText().toString();
             String contents = contentsInput.getText().toString();
             int color = item.getMEMO_COLOR();
 

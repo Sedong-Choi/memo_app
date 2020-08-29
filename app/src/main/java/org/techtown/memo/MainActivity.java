@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
     FavoriteFragment favoriteFragment;
     NewMemoFragment newMemoFragment;
     BottomNavigationView bottomNavigation;
-    String subject;
+    String subject="제목 입력";
 
 
     public MemoDatabase mDatabase = null;
@@ -53,19 +53,19 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
 
                 switch (item.getItemId()) {
                     case R.id.tab_study:
-                        subject = "공부";
+                        subject ="제목 입력";
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, studyFragment).commit();
                         return true;
 
                     case R.id.tab_health:
-                        subject = "운동";
+
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, healthFragment).commit();
                         return true;
 
                     case R.id.tab_money:
-                        subject = "가계부";
+
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, moneyFragment).commit();
                         return true;
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
                         return true;
                     case R.id.tab_newmemo:
                         newMemoFragment = new NewMemoFragment();
+                        //subject를  번들에 담아 newMomoFragment로 이동
                         Bundle result = new Bundle();
                             if(subject !=null) {
                                 Toast.makeText(getApplicationContext(),subject+" 왔다!!",Toast.LENGTH_SHORT).show();
@@ -131,15 +132,15 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
     public void onTabSelected(int position) {
 
         if (position == 0) {
-            subject = "메모";
+
             bottomNavigation.setSelectedItemId(R.id.tab_study);
 
         } else if (position == 1) {
-            subject = "운동";
+
             bottomNavigation.setSelectedItemId(R.id.tab_health);
 
         } else if (position == 2) {
-            subject = "가계부";
+
             bottomNavigation.setSelectedItemId(R.id.tab_money);
 
         }  else if (position == 3) {
