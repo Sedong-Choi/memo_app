@@ -33,7 +33,7 @@ public class StudyFragment extends Fragment {
     Memo item;
     Context context;
     OnTabItemSelectedListener listener;
-    Switch switch_button;
+    String section="모든 메모";
 
 
     String[] items={"모든 메모","좋아요"};
@@ -72,7 +72,7 @@ public class StudyFragment extends Fragment {
 //        sectionTextView.setText("메모");
 
 
-        String section ="모든 메모";
+
         Spinner spinner = rootView.findViewById(R.id.memo_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 rootView.getContext(), R.layout.spinner_custom,items);
@@ -95,8 +95,10 @@ public class StudyFragment extends Fragment {
 
 
                 if(position ==0){
+                    section="모든 메모";
                     loadMemoListData();
                 }else if(position == 1){
+                    section="좋아요";
                     loadFavoMemoListData();
                 }
             }
@@ -277,7 +279,12 @@ public class StudyFragment extends Fragment {
             MemoDatabase database = MemoDatabase.getInstance(context);
             database.execSQL(sql);
         }
-        loadMemoListData();
+        if(section.equals("모든 메모")){
+            loadMemoListData();
+        }else if(section.equals("좋아요")){
+            loadFavoMemoListData();
+        }
+
     }
 
     public void openColorPicker(int position) {
