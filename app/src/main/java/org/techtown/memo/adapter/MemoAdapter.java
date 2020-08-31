@@ -1,4 +1,4 @@
-package org.techtown.memo;
+package org.techtown.memo.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +11,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.techtown.memo.Activity.MainActivity;
+import org.techtown.memo.Memo;
+import org.techtown.memo.OnMemoItemClickListener;
+import org.techtown.memo.R;
+
 import java.util.ArrayList;
 
 
 //adapter 는 RecyclerView 를 설정하고 뿌려주기 위해 사용한다.
 public class MemoAdapter extends RecyclerView.Adapter<MemoAdapter.ViewHolder>
-implements  OnMemoItemClickListener{
-    //MemoItemClickListener >>  메모클릭했을대 수정하는 곳으로 이동하는 listener
+implements OnMemoItemClickListener {
+    //OnMemoItemClickListener >>  메모클릭했을대 수정하는 곳으로 이동하는 listener
     private ArrayList<Memo> items = new ArrayList<>();
     private OnMemoItemClickListener listener;
     private MainActivity mainActivity;

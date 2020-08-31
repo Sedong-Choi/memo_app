@@ -1,4 +1,4 @@
-package org.techtown.memo;
+package org.techtown.memo.Activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +11,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements OnTabItemSelectedListener{
+import org.techtown.memo.fragment.FavoriteFragment;
+import org.techtown.memo.fragment.HealthFragment;
+import org.techtown.memo.Memo;
+import org.techtown.memo.MemoDatabase;
+import org.techtown.memo.fragment.MemoFragment;
+import org.techtown.memo.fragment.MoneyFragment;
+import org.techtown.memo.NewMemoFragment;
+import org.techtown.memo.OnTabItemSelectedListener;
+import org.techtown.memo.R;
+
+public class MainActivity extends AppCompatActivity implements OnTabItemSelectedListener {
     private static final String TAG = "MainActivity";
 
-    StudyFragment studyFragment;
+    MemoFragment studyFragment;
     HealthFragment healthFragment;
     MoneyFragment moneyFragment;
     FavoriteFragment favoriteFragment;
@@ -35,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
 
 
         //fragment 생성됐지만 아직 작동하지 않는다
-        studyFragment= new StudyFragment();
+        studyFragment= new MemoFragment();
         healthFragment = new HealthFragment();
         moneyFragment = new MoneyFragment();
         favoriteFragment = new FavoriteFragment();

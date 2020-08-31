@@ -1,4 +1,4 @@
-package org.techtown.memo;
+package org.techtown.memo.fragment;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Switch;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +19,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.techtown.memo.Util.AppConstants;
+import org.techtown.memo.Memo;
+import org.techtown.memo.MemoDatabase;
+import org.techtown.memo.OnMemoItemClickListener;
+import org.techtown.memo.OnTabItemSelectedListener;
+import org.techtown.memo.R;
+import org.techtown.memo.adapter.MemoAdapter;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
-public class StudyFragment extends Fragment {
+public class MemoFragment extends Fragment {
     private static final String TAG = "MemoFragment";
 
     TextView sectionTextView;
@@ -34,6 +42,7 @@ public class StudyFragment extends Fragment {
     Context context;
     OnTabItemSelectedListener listener;
     String section="모든 메모";
+
 
 
     String[] items={"모든 메모","좋아요"};
@@ -68,8 +77,7 @@ public class StudyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_memo, container, false);
-//        sectionTextView = rootView.findViewById(R.id.section_title);
-//        sectionTextView.setText("메모");
+
 
 
 
@@ -273,7 +281,7 @@ public class StudyFragment extends Fragment {
                     " set " +
                     "   MEMO_FAVORITE = '" + favo + "'" +
                     " where " +
-                    "   _id = " + selectItem._id;
+                    "   _id = " + selectItem.get_id();
 
             Log.d(TAG, "sql : " + sql);
             MemoDatabase database = MemoDatabase.getInstance(context);
@@ -342,7 +350,7 @@ public class StudyFragment extends Fragment {
             // delete note
             String sql = "delete from " + MemoDatabase.TABLE_MEMO +
                     " where " +
-                    "   _id = " + selectItem._id;
+                    "   _id = " + selectItem.get_id();
 
             Log.d(TAG, "sql : " + sql);
             MemoDatabase database = MemoDatabase.getInstance(context);
@@ -353,7 +361,8 @@ public class StudyFragment extends Fragment {
 
     private void modifyMemo() {
         if (item != null) {
-            String memo_subject = sectionTextView.getText().toString();
+
+
             String contents = item.getMEMO_CONTENTS();
             int color = item.getMEMO_COLOR();
 
@@ -362,11 +371,11 @@ public class StudyFragment extends Fragment {
             // update note
             String sql = "update " + MemoDatabase.TABLE_MEMO +
                     " set " +
-                    "   MEMO_SUBJECT = '" + memo_subject + "'" +
-                    "   ,MEMO_CONTENTS = '" + contents + "'" +
+
+                    "   MEMO_CONTENTS = '" + contents + "'" +
                     "   ,MEMO_COLOR =  "+ color  +
                     " where " +
-                    "   _id = " + item._id;
+                    "   _id = " + item.get_id();
 
             Log.d(TAG, "sql : " + sql);
             MemoDatabase database = MemoDatabase.getInstance(context);

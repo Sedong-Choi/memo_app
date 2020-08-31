@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import org.techtown.memo.Util.AppConstants;
+
 /**
  * 메모 데이터베이스
  */

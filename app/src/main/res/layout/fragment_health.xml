@@ -1,103 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#974444"
-        android:dateTextAppearance="@style/CalenderViewDateCustomText"
-        android:theme="@style/CalenderViewCustom"
-        android:weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
-
-
+    <!--헤더-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#FFADAD">
+            android:padding="16dp"
+            android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/baseline_fitness_center_black_18dp" />
-
-                <TextView
-                    android:id="@+id/health_weight"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1.3"
-                    android:background="#FFFFFF"
-                    android:gravity="center"
-                    android:focusable="true"
-                    android:textColor="#000000"
-                    android:text="무게" />
-
-                <TextView
-                    android:id="@+id/health_set"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:gravity="center"
-                    android:focusable="true"
-                    android:textColor="#000000"
-                    android:text="세트" />
-
-                <TextView
-                    android:id="@+id/health_times"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:gravity="center"
-                    android:focusable="true"
-                    android:textColor="#000000"
-                    android:text="횟수" />
-
-                <Button
-                    android:id="@+id/health_add"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:layout_weight="0.5"
-                    android:textSize="10sp"
-                    android:background="@drawable/health_add_button"
-                    android:layout_gravity="center"
-                    android:text="추가" />
-
-            </LinearLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/health_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-        </RelativeLayout>
     </LinearLayout>
+    <!--요일-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#eaeae9"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="일"
+            android:textSize="9sp" />
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="월"
+            android:textColor="@color/black"
+            android:textSize="9sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="화"
+            android:textColor="@color/black"
+            android:textSize="9sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="수"
+            android:textColor="@color/black"
+            android:textSize="9sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="목"
+            android:textColor="@color/black"
+            android:textSize="9sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="금"
+            android:textColor="@color/black"
+            android:textSize="9sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="토"
+            android:textSize="9sp" />
+    </LinearLayout>
+    <!--달력뷰-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
+

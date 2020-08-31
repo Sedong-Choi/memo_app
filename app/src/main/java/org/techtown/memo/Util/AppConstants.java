@@ -1,4 +1,4 @@
-package org.techtown.memo;
+package org.techtown.memo.Util;
 
 import android.os.Handler;
 import android.util.Log;

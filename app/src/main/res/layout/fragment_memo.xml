@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".StudyFragment">
+    tools:context=".fragment.MemoFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
