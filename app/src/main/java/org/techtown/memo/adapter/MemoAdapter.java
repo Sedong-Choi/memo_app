@@ -25,8 +25,6 @@ implements OnMemoItemClickListener {
     //OnMemoItemClickListener >>  메모클릭했을대 수정하는 곳으로 이동하는 listener
     private ArrayList<Memo> items = new ArrayList<>();
     private OnMemoItemClickListener listener;
-    private MainActivity mainActivity;
-
 
 
     @NonNull
@@ -35,7 +33,7 @@ implements OnMemoItemClickListener {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         //memo_item.xml을 입력하기 위해
         View itemView = inflater.inflate(R.layout.memo_item,viewGroup,false);
-        mainActivity = (MainActivity) viewGroup.getContext();
+
         return new ViewHolder(itemView,this);
     }
     @Override

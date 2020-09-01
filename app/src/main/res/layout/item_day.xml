@@ -3,18 +3,20 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="50dp"
+    android:background="@drawable/calendar_enabled"
+    >
 
     <TextView
         android:id="@+id/item_day"
-        android:textSize="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:textColor="#000000"
+        android:textSize="10dp"
         tool:text="00" />
 
 </RelativeLayout>
