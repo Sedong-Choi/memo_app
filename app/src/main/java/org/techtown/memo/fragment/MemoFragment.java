@@ -142,7 +142,7 @@ public class MemoFragment extends Fragment {
                     Bundle result = new Bundle();
                     result.putString("MEMO_SUBJECT","제목 입력");
 
-                    listener.onTabSelected(4);
+                    listener.showNewMemo(item);
                 }
 
             }
@@ -160,7 +160,7 @@ public class MemoFragment extends Fragment {
             @Override
             public void onItemClick(MemoAdapter.ViewHolder ViewHolder, View view, int position) {
                 Memo item = adapter.getItem(position);// position ==> cardView 의 위치
-                Toast.makeText(getContext(),"선택된 탭 "+position,Toast.LENGTH_SHORT).show();
+
                 if(listener != null){
                     listener.showNewMemo(item);
                 }

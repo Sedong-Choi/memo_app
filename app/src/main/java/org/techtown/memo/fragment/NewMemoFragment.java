@@ -1,4 +1,4 @@
-package org.techtown.memo;
+package org.techtown.memo.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import org.techtown.memo.Memo;
+import org.techtown.memo.MemoDatabase;
+import org.techtown.memo.OnTabItemSelectedListener;
+import org.techtown.memo.R;
 import org.techtown.memo.Util.AppConstants;
 
 import java.util.Date;
@@ -72,7 +76,7 @@ public class NewMemoFragment extends Fragment {
             //새 메모 클릭시 subject 받아와 설정하는 곳
             section = this.getArguments().getString("MEMO_SUBJECT");
         }else{
-            section = "메모2";
+            section = "제목 입력";
         }
         sectionText.setText(section);
         initUI(rootView);
@@ -201,7 +205,7 @@ public class NewMemoFragment extends Fragment {
                     "   ,MEMO_COLOR = " + color + "" +
                     "   ,MEMO_FAVORITE = '" + "" + "'" +
                     " where " +
-                    "   _id = " + item._id;
+                    "   _id = " + item.get_id();
 
             Log.d(TAG, "sql : " + sql);
             MemoDatabase database = MemoDatabase.getInstance(context);
@@ -219,7 +223,7 @@ public class NewMemoFragment extends Fragment {
             // delete note
             String sql = "delete from " + MemoDatabase.TABLE_MEMO +
                     " where " +
-                    "   _id = " + item._id;
+                    "   _id = " + item.get_id();
 
             Log.d(TAG, "sql : " + sql);
             MemoDatabase database = MemoDatabase.getInstance(context);

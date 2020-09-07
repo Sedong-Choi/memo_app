@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,8 +28,10 @@ public class HealthFragment extends Fragment {
     public ArrayList<Object> mCalendarList = new ArrayList<>();
     public TextView textView;
     public RecyclerView recyclerView;
+    public RecyclerView health_setRecyclerView;
     private CalendarAdapter mAdapter;
     private StaggeredGridLayoutManager manager;
+    private int empty_count;
 
 
     public String header_date;
@@ -48,14 +51,19 @@ public class HealthFragment extends Fragment {
         initSet();
 
         textView.setText(header_date);
-        setRecycler();
+        setCalendarRecycler();
+        setDayRecycler();
 
         return rootView;
     }
+
+
+
     public void initView(View v){
 
         textView = (TextView)v.findViewById(R.id.title);
         recyclerView = (RecyclerView)v.findViewById(R.id.calendar);
+        health_setRecyclerView = (RecyclerView) v.findViewById(R.id.health_today_goal);
         Button pre_month_button = v.findViewById(R.id.pre_month_button);
         pre_month_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +72,7 @@ public class HealthFragment extends Fragment {
                 //누르다 해가 바뀌면 year_count 바뀌게 넣어야 함;
                 initSet();
                 textView.setText(header_date);
-                setRecycler();
+                setCalendarRecycler();
             }
         });
         Button next_month_button = v.findViewById(R.id.next_month_button);
@@ -74,14 +82,27 @@ public class HealthFragment extends Fragment {
                 month_count = month_count +1;
                 initSet();
                 textView.setText(header_date);
-                setRecycler();;
+                setCalendarRecycler();;
             }
         });
+        Button health_add_button = v.findViewById(R.id.health_add_button);
+        health_add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"추가 버튼 눌렀어여",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 
     public void initSet(){
 
         initCalendarList();
+        initTodayList();
+    }
+
+    private void initTodayList() {//누른 날짜의 운동 정보 표시
 
     }
 
@@ -91,7 +112,7 @@ public class HealthFragment extends Fragment {
         setCalendarList(cal);
     }
 
-    private void setRecycler() {
+    private void setCalendarRecycler() {
 
         if (mCalendarList == null) {
             Log.w("TAG", "No Query, not initializing RecyclerView");
@@ -108,6 +129,11 @@ public class HealthFragment extends Fragment {
 //        if (mCenterPosition >= 0) {
 //            recyclerView.scrollToPosition(mCenterPosition);
 //        }
+    }
+
+    private void setDayRecycler() {//빈공간을 포함하므로 day의 포지션은 빈공간 갯수만큼 마이너스 해야한다.
+
+
     }
 
     public void setCalendarList(GregorianCalendar cal) {
@@ -145,8 +171,10 @@ public class HealthFragment extends Fragment {
             int max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); // 해당 월에 마지막 요일
 
             // EMPTY 생성
+            empty_count=0;
             for (int j = 0; j < dayOfWeek; j++) {
                 calendarList.add(Keys.EMPTY);
+                empty_count++;
             }
             for (int j = 1; j <= max; j++) {
                 //여기에 저장된 운동 값 넣어서 뿌려주기

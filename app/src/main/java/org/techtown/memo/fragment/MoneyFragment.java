@@ -31,6 +31,7 @@ public class MoneyFragment extends Fragment {
     TextView sectionTextView;//메모_'공부 || 운동 || 가계부 || 좋아요 || 통계' 입력하기 위해 객체 가져온다.
     RecyclerView recyclerView;
     MemoAdapter adapter;
+    Memo item;
 
     Context context;
     OnTabItemSelectedListener listener;
@@ -86,7 +87,7 @@ public class MoneyFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("MEMO_SUBJECT",section);
                 if (listener != null) {
-                    listener.onTabSelected(4);
+                    listener.showNewMemo(item);
                 }
 
             }
@@ -104,7 +105,7 @@ public class MoneyFragment extends Fragment {
             @Override
             public void onItemClick(MemoAdapter.ViewHolder ViewHolder, View view, int position) {
                 Memo item = adapter.getItem(position);// position ==> cardView 의 위치
-                Toast.makeText(getContext(),""+position,Toast.LENGTH_SHORT).show();
+
                 if(listener != null){
                     listener.showNewMemo(item);
                 }

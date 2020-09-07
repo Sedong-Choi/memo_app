@@ -3,7 +3,6 @@ package org.techtown.memo.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.techtown.memo.fragment.FavoriteFragment;
 import org.techtown.memo.fragment.HealthFragment;
 import org.techtown.memo.Memo;
 import org.techtown.memo.MemoDatabase;
 import org.techtown.memo.fragment.MemoFragment;
 import org.techtown.memo.fragment.MoneyFragment;
-import org.techtown.memo.NewMemoFragment;
+import org.techtown.memo.fragment.NewMemoFragment;
 import org.techtown.memo.OnTabItemSelectedListener;
 import org.techtown.memo.R;
 
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
     MemoFragment studyFragment;
     HealthFragment healthFragment;
     MoneyFragment moneyFragment;
-    FavoriteFragment favoriteFragment;
+
     NewMemoFragment newMemoFragment;
     BottomNavigationView bottomNavigation;
     String subject="제목 입력";
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
         studyFragment= new MemoFragment();
         healthFragment = new HealthFragment();
         moneyFragment = new MoneyFragment();
-        favoriteFragment = new FavoriteFragment();
+
 
 
         //기본 fragment 설정을 위해 replace and commit 을해서 작동
@@ -80,24 +78,20 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
                                 .replace(R.id.container, moneyFragment).commit();
                         return true;
 
-                    case R.id.tab_favorite:
 
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, favoriteFragment).commit();
-                        return true;
-                    case R.id.tab_newmemo:
-                        newMemoFragment = new NewMemoFragment();
-                        //subject를  번들에 담아 newMomoFragment로 이동
-                        Bundle result = new Bundle();
-                            if(subject !=null) {
-                                Toast.makeText(getApplicationContext(),subject+" 왔다!!",Toast.LENGTH_SHORT).show();
-                                result.putString("MEMO_SUBJECT", subject);
-                                newMemoFragment.setArguments(result);
-                            }
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.container, newMemoFragment).commit();
-
-                        return true;
+//                    case R.id.tab_newmemo:
+//                        newMemoFragment = new NewMemoFragment();
+//                        //subject를  번들에 담아 newMomoFragment로 이동
+//                        Bundle result = new Bundle();
+//                            if(subject !=null) {
+//                                Toast.makeText(getApplicationContext(),subject+" 왔다!!",Toast.LENGTH_SHORT).show();
+//                                result.putString("MEMO_SUBJECT", subject);
+//                                newMemoFragment.setArguments(result);
+//                            }
+//                        getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.container, newMemoFragment).commit();
+//
+//                        return true;
                 }
 
                 return false;
@@ -153,21 +147,22 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
 
             bottomNavigation.setSelectedItemId(R.id.tab_money);
 
-        }  else if (position == 3) {
-            bottomNavigation.setSelectedItemId(R.id.tab_favorite);
-
-        }else if (position == 4) {
-            newMemoFragment = new NewMemoFragment();
-            Bundle result = new Bundle();
-            if(subject !=null) {
-                Toast.makeText(getApplicationContext(),subject+" 왔다!!22",Toast.LENGTH_SHORT).show();
-                result.putString("MEMO_SUBJECT", subject);
-                newMemoFragment.setArguments(result);
-            }
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, newMemoFragment).commit();
-            bottomNavigation.setSelectedItemId(R.id.tab_newmemo);
         }
+//        else if (position == 3) {
+//            bottomNavigation.setSelectedItemId(R.id.tab_favorite);
+//
+//        }else if (position == 4) {
+//            newMemoFragment = new NewMemoFragment();
+//            Bundle result = new Bundle();
+//            if(subject !=null) {
+//                Toast.makeText(getApplicationContext(),subject+" 왔다!!22",Toast.LENGTH_SHORT).show();
+//                result.putString("MEMO_SUBJECT", subject);
+//                newMemoFragment.setArguments(result);
+//            }
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.container, newMemoFragment).commit();
+//            bottomNavigation.setSelectedItemId(R.id.tab_newmemo);
+//        }
 
     }
     @Override
@@ -180,6 +175,8 @@ public class MainActivity extends AppCompatActivity implements OnTabItemSelected
                 .replace(R.id.container, newMemoFragment).commit();
 
     }
+
+
 
 
 
